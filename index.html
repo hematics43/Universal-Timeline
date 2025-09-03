@@ -51,6 +51,7 @@
     border-radius:var(--radius); padding:14px;
     box-shadow:0 4px 18px rgba(0,0,0,.08);
     max-width:280px; transition:background .3s,color .3s,border .3s;
+    
   }
   .when{ font-weight:700; margin-bottom:6px; }
   .img-box{ width:100%; height:160px; overflow:hidden;
@@ -154,7 +155,7 @@
 </head>
 <body class="dark">
 
-<button class="theme-toggle" id="themeToggle">☀️</button>
+<button class="theme-toggle" id="themeToggle">🕹️</button>
 
 <header>
   <h1>📜 Universal Timeline 🦋</h1>
@@ -176,6 +177,7 @@
 </script>
 
 </header>
+
 
 <!-- Auto Welcome Popup -->
 <div id="welcomeOverlay" style="
@@ -244,10 +246,12 @@
 
 <!-- Local Time Box -->
 <div id="localClock" style="
-  position:fixed; top:10px; left:50%;
+  position:fixed; top:0px; left:50%;
   transform:translateX(-50%);
   background:var(--bg,#111); color:var(--fg,#fff);
-  padding:8px 14px; border-radius:8px; font-size:13px;
+  padding:6px 12px; border-radius:6px;
+  font-size:clamp(10px, 2.5vw, 14px);
+  white-space:nowrap;
   box-shadow:0 4px 12px rgba(0,0,0,0.25); z-index:9999;">
   ⏰ Loading local time...
 </div>
@@ -260,8 +264,6 @@ function updateLocalClock() {
   
   document.getElementById("localClock").textContent = `📅 ${date} | ⏰ ${time}`;
 }
-
-// update every second
 setInterval(updateLocalClock, 1000);
 updateLocalClock();
 </script>
@@ -278,6 +280,8 @@ updateLocalClock();
         which will only show when you click or tap to expand. It may contain
         historical details, context, and background information.
       </div>
+      
+
     </div>
   </div>
 
@@ -557,7 +561,7 @@ updateLocalClock();
   const toggle=document.getElementById('themeToggle');
   toggle.addEventListener('click',()=>{
     body.classList.toggle('dark');
-    toggle.textContent=body.classList.contains('dark')?"☀️":"🌙";
+    toggle.textContent=body.classList.contains('dark')?"🔥":"🦇";
   });
 
   // Expandable descriptions (no "… more/less", just toggle on tap)
