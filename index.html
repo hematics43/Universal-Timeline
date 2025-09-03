@@ -163,26 +163,6 @@
   </div>
 
 </header>
-<script>
-  // ---- Local user counter ----
-  let localVisits = localStorage.getItem("visits") || 0;
-  localVisits++;
-  localStorage.setItem("visits", localVisits);
-
-  // ---- Global counter ----
-  fetch("https://api.countapi.xyz/hit/mytimeline.unique123/visits")
-    .then(res => res.json())
-    .then(res => {
-      const globalVisits = res.value;
-      document.getElementById("visitCounter").textContent =
-        "👀 Your visits: " + localVisits + " | 👥 Total visits: " + globalVisits;
-    })
-    .catch(err => {
-      document.getElementById("visitCounter").textContent =
-        "👀 Your visits: " + localVisits + " | ⚠️ Global counter unavailable";
-      console.error(err);
-    });
-</script>
 
 <div id="visitCounter" style="text-align:center; margin:20px; font-weight:bold;"></div>
 <script>
