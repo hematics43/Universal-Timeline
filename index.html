@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Timeline with Image Popup</title>
+<title>Responsive Timeline</title>
 <style>
   :root{
     --bg:#fff; --fg:#111827; --muted:#6b7280;
@@ -52,7 +52,25 @@
     cursor:pointer; margin-bottom:8px; background:#ddd;
   }
   .img-box img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .what{ font-size:14px; color:var(--muted); }
+
+  /* Description */
+  .what{
+    font-size:14px; color:var(--muted);
+    max-height:3.2em; overflow:hidden; position:relative;
+    cursor:pointer; transition:max-height .3s ease;
+  }
+  .what::after{
+    content:"… more"; position:absolute; bottom:0; right:0;
+    background:linear-gradient(to right, transparent, var(--bg));
+    padding-left:6px; font-size:12px; color:var(--accent);
+  }
+  .what.expanded{
+    max-height:200px; /* enough space */
+    overflow:auto;
+  }
+  .what.expanded::after{
+    content:" less"; background:none; font-size:12px; color:var(--accent);
+  }
 
   /* Lightbox */
   .lightbox{
@@ -86,15 +104,15 @@
 
   /* Mobile adjustments */
   @media(max-width:700px){
-    .timeline::before{ left:8px; transform:none; }
-    .node{ width:100%; padding-left:30px; padding-right:15px; text-align:left; }
+    .timeline::before{ left:50%; transform:translateX(-50%); }
+    .node{ width:100%; padding:20px; text-align:center; }
     .node.left,.node.right{ left:0; }
-    .dot{ left:0; transform:none; }
-    .card{ max-width:100%; }
+    .dot{ left:50%; transform:translateX(-50%); }
+    .card{ max-width:90%; margin:0 auto; text-align:left; }
   }
 </style>
 </head>
-<body class="dark"><!-- start in dark mode -->
+<body class="dark">
 
 <!-- Theme toggle -->
 <button class="theme-toggle" id="themeToggle">☀️</button>
@@ -107,7 +125,11 @@
       <div class="img-box">
         <img src="UNI01.png" alt="Event 1">
       </div>
-      <div class="what">Event 1 — short description.</div>
+      <div class="what">
+        Event 1 — short description. This is a longer explanation of the event,
+        which will only show when you click to expand. It may contain historical
+        details, context, and background information.
+      </div>
     </div>
   </div>
 
@@ -116,9 +138,12 @@
     <div class="card">
       <div class="when">1914</div>
       <div class="img-box">
-        <img src="https://via.placeholder.com/800x500.png?text=Image+2" alt="Event 2">
+        <img src="UNI01.png" alt="Event 2">
       </div>
-      <div class="what">Event 2 — short description.</div>
+      <div class="what">
+        Event 2 — short description. Click to read the full explanation about
+        the causes, timeline, and consequences of this historical moment.
+      </div>
     </div>
   </div>
   <div class="node left">
@@ -128,17 +153,25 @@
       <div class="img-box">
         <img src="UNI01.png" alt="Event 1">
       </div>
-      <div class="what">Event 1 — short description.</div>
+      <div class="what">
+        Event 1 — short description. This is a longer explanation of the event,
+        which will only show when you click to expand. It may contain historical
+        details, context, and background information.
+      </div>
     </div>
   </div>
+
   <div class="node right">
     <div class="dot"></div>
     <div class="card">
       <div class="when">1914</div>
       <div class="img-box">
-        <img src="https://via.placeholder.com/800x500.png?text=Image+2" alt="Event 2">
+        <img src="UNI01.png" alt="Event 2">
       </div>
-      <div class="what">Event 2 — short description.</div>
+      <div class="what">
+        Event 2 — short description. Click to read the full explanation about
+        the causes, timeline, and consequences of this historical moment.
+      </div>
     </div>
   </div>
 </div>
@@ -162,6 +195,12 @@
     toggle.textContent=body.classList.contains('dark')?"☀️":"🌙";
   });
 
+  // Expandable descriptions
+  document.querySelectorAll('.what').forEach(desc=>{
+    desc.addEventListener('click',()=>desc.classList.toggle('expanded'));
+  });
+
+  // Lightbox
   const lightbox=document.getElementById('lightbox');
   const imgLayer=document.getElementById('imgLayer');
   const lightImage=document.getElementById('lightImage');
@@ -188,7 +227,7 @@
   lightbox.addEventListener('click',e=>{ if(e.target===lightbox) closeLarge(); });
   document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLarge(); });
 
-  // Desktop & Mobile drag
+  // Drag for popup image
   imgLayer.addEventListener('pointerdown',e=>{
     dragging=true; imgLayer.classList.add('dragging');
     imgLayer.setPointerCapture(e.pointerId);
