@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Timeline with Search</title>
+<title>Universal Timeline</title>
 <style>
   :root{
     --bg:#fff; --fg:#111827; --muted:#6b7280;
-    --accent:#2563eb; --line:#e6e9ee;
+    --accent:#ced2db; --line:#e6e9ee;
     --radius:12px;
   }
   body{
@@ -23,7 +23,6 @@
     background:linear-gradient(180deg,#071021,#061223);
   }
 
-  /* Heading & Search */
   header{ text-align:center; margin-bottom:30px; }
   h1{ margin:0 0 15px; font-size:26px; font-weight:700; }
   .search-box{ max-width:400px; margin:0 auto; }
@@ -31,11 +30,9 @@
     width:100%; padding:10px 14px;
     border-radius:8px; border:1px solid var(--line);
     font-size:15px; background:var(--bg); color:var(--fg);
-    transition:border .3s;
   }
   .search-box input:focus{ border-color:var(--accent); outline:none; }
 
-  /* Timeline */
   .timeline{ position:relative; max-width:900px; margin:0 auto; }
   .timeline::before{
     content:""; position:absolute; top:0; bottom:0; left:50%;
@@ -65,18 +62,11 @@
   /* Description */
   .what{
     font-size:14px; color:var(--muted);
-    max-height:3.2em; overflow:hidden; position:relative;
+    max-height:3.2em; overflow:hidden;
     cursor:pointer; transition:max-height .3s ease;
   }
-  .what::after{
-    content:"… more"; position:absolute; bottom:0; right:0;
-    background:linear-gradient(to right, transparent, var(--bg));
-    padding-left:6px; font-size:12px; color:var(--accent);
-  }
   .what.expanded{ max-height:200px; overflow:auto; }
-  .what.expanded::after{ content:" less"; background:none; color:var(--accent); }
 
-  /* Hide card when filtered */
   .node.hidden{ display:none; }
 
   /* Lightbox */
@@ -92,24 +82,21 @@
   }
   .img-layer{ will-change:transform; cursor:grab; user-select:none; touch-action:none; }
   .img-layer.dragging{ cursor:grabbing; }
-  .panel img{ max-width:100%; max-height:100%; display:block; pointer-events:none; user-select:none; border-radius:8px; box-shadow:0 6px 22px rgba(0,0,0,.35); }
+  .panel img{ max-width:100%; max-height:100%; display:block; border-radius:8px; box-shadow:0 6px 22px rgba(0,0,0,.35); }
   .close-btn{ position:absolute; top:10px; right:10px;
     background:rgba(255,255,255,0.9); border:none; border-radius:50%;
     width:36px; height:36px; font-weight:700; cursor:pointer;
-    box-shadow:0 4px 18px rgba(0,0,0,.2);
   }
 
-  /* Theme toggle */
   .theme-toggle{
     position:fixed; left:10px; top:50%; transform:translateY(-50%);
     background:var(--bg); color:var(--fg);
     border:1px solid var(--line); border-radius:50%;
     width:46px; height:46px; display:grid; place-items:center;
     cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,.15);
-    z-index:2000; transition:background .3s,color .3s,border .3s;
+    z-index:2000;
   }
 
-  /* Mobile adjustments */
   @media(max-width:700px){
     .timeline::before{ left:50%; transform:translateX(-50%); }
     .node{ width:100%; padding:20px; text-align:center; }
@@ -121,11 +108,10 @@
 </head>
 <body class="dark">
 
-<!-- Theme toggle -->
 <button class="theme-toggle" id="themeToggle">☀️</button>
 
 <header>
-  <h1>📜 My Timeline</h1>
+  <h1>📜 Universal Timeline</h1>
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="Search events...">
   </div>
@@ -137,12 +123,12 @@
     <div class="card">
       <div class="when">1905</div>
       <div class="img-box">
-        <img src="UNI01.png" alt="Event 1">
+        <img src="https://via.placeholder.com/800x500.png?text=Image+1" alt="Event 1">
       </div>
       <div class="what">
         Event 1 — short description. This is a longer explanation of the event,
-        which will only show when you click to expand. It may contain historical
-        details, context, and background information.
+        which will only show when you click or tap to expand. It may contain
+        historical details, context, and background information.
       </div>
     </div>
   </div>
@@ -152,45 +138,16 @@
     <div class="card">
       <div class="when">1914</div>
       <div class="img-box">
-        <img src="UNI01.png" alt="Event 2">
+        <img src="https://via.placeholder.com/800x500.png?text=Image+2" alt="Event 2">
       </div>
       <div class="what">
-        Event 2 — short description. Click to read the full explanation about
-        the causes, timeline, and consequences of this historical moment.
-      </div>
-    </div>
-  </div>
-   <div class="node left">
-    <div class="dot"></div>
-    <div class="card">
-      <div class="when">1905</div>
-      <div class="img-box">
-        <img src="UNI01.png" alt="Event 1">
-      </div>
-      <div class="what">
-        Event 1 — short description. This is a longer explanation of the event,
-        which will only show when you click to expand. It may contain historical
-        details, context, and background information.
-      </div>
-    </div>
-  </div>
-
-  <div class="node right">
-    <div class="dot"></div>
-    <div class="card">
-      <div class="when">1914</div>
-      <div class="img-box">
-        <img src="UNI01.png" alt="Event 2">
-      </div>
-      <div class="what">
-        Event 2 — short description. Click to read the full explanation about
+        Event 2 — short description. Tap to read the full explanation about
         the causes, timeline, and consequences of this historical moment.
       </div>
     </div>
   </div>
 </div>
 
-<!-- Lightbox -->
 <div class="lightbox" id="lightbox">
   <div class="panel" id="panel">
     <div class="img-layer" id="imgLayer" style="transform:translate(0,0) scale(1);">
@@ -209,7 +166,7 @@
     toggle.textContent=body.classList.contains('dark')?"☀️":"🌙";
   });
 
-  // Expandable descriptions
+  // Expandable descriptions (no "… more/less", just toggle on tap)
   document.querySelectorAll('.what').forEach(desc=>{
     desc.addEventListener('click',()=>desc.classList.toggle('expanded'));
   });
