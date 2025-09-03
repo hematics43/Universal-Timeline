@@ -104,6 +104,42 @@
     .dot{ left:50%; transform:translateX(-50%); }
     .card{ max-width:90%; margin:0 auto; text-align:left; }
   }
+  /* Base style */
+.node .dot{
+  width:14px; height:14px; border-radius:50%;
+  border:2px solid var(--bg); z-index:2; position:absolute; top:30px; left:50%; transform:translateX(-50%);
+}
+.node .card{ border:1px solid var(--line); }
+
+/* Different colors for each event */
+.node:nth-child(1) .dot, .node:nth-child(1) .card { --accent:#e63946; border-color:#e63946; }
+.node:nth-child(2) .dot, .node:nth-child(2) .card { --accent:#ffb703; border-color:#ffb703; }
+.node:nth-child(3) .dot, .node:nth-child(3) .card { --accent:#2a9d8f; border-color:#2a9d8f; }
+.node:nth-child(4) .dot, .node:nth-child(4) .card { --accent:#8e44ad; border-color:#8e44ad; }
+.node:nth-child(5) .dot, .node:nth-child(5) .card { --accent:#1d4ed8; border-color:#1d4ed8; }
+/* add more as needed */
+
+.panel{
+  position:relative;
+  max-width:95vw;
+  max-height:90vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px; /* adds breathing room */
+  box-sizing:border-box;
+}
+
+.panel img{
+  max-width:100%;
+  max-height:85vh; /* keeps some space for close button */
+  width:auto;
+  height:auto;
+  display:block;
+  border-radius:10px;
+  box-shadow:0 6px 24px rgba(0,0,0,.35);
+  object-fit:contain; /* ensures full image shows properly */
+}
 </style>
 </head>
 <body class="dark">
@@ -123,7 +159,7 @@
     <div class="card">
       <div class="when">1905</div>
       <div class="img-box">
-        <img src="https://via.placeholder.com/800x500.png?text=Image+1" alt="Event 1">
+        <img src="UNI01.png" alt="Event 1">
       </div>
       <div class="what">
         Event 1 — short description. This is a longer explanation of the event,
@@ -138,7 +174,116 @@
     <div class="card">
       <div class="when">1914</div>
       <div class="img-box">
-        <img src="https://via.placeholder.com/800x500.png?text=Image+2" alt="Event 2">
+        <img src="UNI01.png" alt="Event 2">
+      </div>
+      <div class="what">
+        Event 2 — short description. Tap to read the full explanation about
+        the causes, timeline, and consequences of this historical moment.
+      </div>
+    </div>
+  </div>
+ <div class="node left">
+    <div class="dot"></div>
+    <div class="card">
+      <div class="when">1905</div>
+      <div class="img-box">
+        <img src="UNI01.png" alt="Event 1">
+      </div>
+      <div class="what">
+        Event 1 — short description. This is a longer explanation of the event,
+        which will only show when you click or tap to expand. It may contain
+        historical details, context, and background information.
+      </div>
+    </div>
+  </div>
+
+  <div class="node right">
+    <div class="dot"></div>
+    <div class="card">
+      <div class="when">1914</div>
+      <div class="img-box">
+        <img src="UNI01.png" alt="Event 2">
+      </div>
+      <div class="what">
+        Event 2 — short description. Tap to read the full explanation about
+        the causes, timeline, and consequences of this historical moment.
+      </div>
+    </div>
+  </div><div class="node left">
+    <div class="dot"></div>
+    <div class="card">
+      <div class="when">1905</div>
+      <div class="img-box">
+        <img src="UNI01.png" alt="Event 1">
+      </div>
+      <div class="what">
+        Event 1 — short description. This is a longer explanation of the event,
+        which will only show when you click or tap to expand. It may contain
+        historical details, context, and background information.
+      </div>
+    </div>
+  </div>
+
+  <div class="node right">
+    <div class="dot"></div>
+    <div class="card">
+      <div class="when">1914</div>
+      <div class="img-box">
+        <img src="UNI01.png" alt="Event 2">
+      </div>
+      <div class="what">
+        Event 2 — short description. Tap to read the full explanation about
+        the causes, timeline, and consequences of this historical moment.
+      </div>
+    </div>
+  </div><div class="node left">
+    <div class="dot"></div>
+    <div class="card">
+      <div class="when">1905</div>
+      <div class="img-box">
+        <img src="UNI01.png" alt="Event 1">
+      </div>
+      <div class="what">
+        Event 1 — short description. This is a longer explanation of the event,
+        which will only show when you click or tap to expand. It may contain
+        historical details, context, and background information.
+      </div>
+    </div>
+  </div>
+
+  <div class="node right">
+    <div class="dot"></div>
+    <div class="card">
+      <div class="when">1914</div>
+      <div class="img-box">
+        <img src="UNI01.png" alt="Event 2">
+      </div>
+      <div class="what">
+        Event 2 — short description. Tap to read the full explanation about
+        the causes, timeline, and consequences of this historical moment.
+      </div>
+    </div>
+  </div><div class="node left">
+    <div class="dot"></div>
+    <div class="card">
+      <div class="when">1905</div>
+      <div class="img-box">
+        <img src="UNI01.png" alt="Event 1">
+      </div>
+      <div class="what">
+        Event 1 — short description. This is a longer explanation of the event,
+        which will only show when you click or tap to expand. It may contain
+        historical details, context, and background information.
+      </div>
+    </div>
+  </div>
+
+  <div class="node right">
+    <div class="dot"></div>
+    <div class="card">
+      <div class="when">1914</div>
+      <div class="img-box">
+        <img src="UNI01.png" alt="Event 2">
       </div>
       <div class="what">
         Event 2 — short description. Tap to read the full explanation about
