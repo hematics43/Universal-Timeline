@@ -151,6 +151,14 @@
   box-shadow:0 6px 24px rgba(0,0,0,.35);
   object-fit:contain; /* ensures full image shows properly */
 }
+.what {
+  font-weight: bold;               /* Makes text bold */
+  transition: text-shadow 0.3s;    /* Smooth hover effect */
+}
+
+.what:hover {
+  text-shadow: 0 0 10px gold, 0 0 20px orange, 0 0 30px red; /* Glowing effect */
+}
 </style>
 </head>
 <body class="dark">
@@ -271,15 +279,13 @@ updateLocalClock();
   <div class="node left">
     <div class="dot"></div>
     <div class="card">
-      <div class="when">1905</div>
+      <div class="when">480 BCE: Birth of Siddhartha Gautama
+</div>
       <div class="img-box">
-        <img src="UNI01.png" alt="Event 1">
+        <img src="gb01.jpg" alt="Event 1">
       </div>
       <div class="what">
-        Event 1 — short description. This is a longer explanation of the event,
-        which will only show when you click or tap to expand. It may contain
-        historical details, context, and background information.
-      </div>
+       Siddhartha Gautama, later called the Buddha, was born in Lumbini in the 6th century BCE. He was a prince who left his palace in search of truth and the end of suffering. After deep meditation, he gained enlightenment under the Bodhi tree at Bodh Gaya. He taught the Four Noble Truths and the Eightfold Path to overcome suffering. His teachings spread widely, forming Buddhism, a path of peace and compassion.      </div>
       
 
     </div>
