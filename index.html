@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Mobile-Friendly Timeline</title>
+<title>Timeline with Image Popup</title>
 <style>
   :root{
     --bg:#fff; --fg:#111827; --muted:#6b7280;
@@ -58,16 +58,16 @@
   .lightbox{
     position:fixed; inset:0; display:none;
     align-items:center; justify-content:center;
-    background:rgba(8,10,14,0.55); z-index:1200;
-    backdrop-filter:blur(2px);
+    background:rgba(8,10,14,0.75); z-index:1200;
+    backdrop-filter:blur(3px);
   }
   .lightbox.open{ display:flex; }
-  .panel{ position:relative; max-width:92vw; max-height:86vh;
+  .panel{ position:relative; max-width:95vw; max-height:90vh;
     display:flex; align-items:center; justify-content:center; overflow:hidden;
   }
   .img-layer{ will-change:transform; cursor:grab; user-select:none; touch-action:none; }
   .img-layer.dragging{ cursor:grabbing; }
-  .panel img{ max-width:100%; max-height:100%; display:block; pointer-events:none; user-select:none; }
+  .panel img{ max-width:100%; max-height:100%; display:block; pointer-events:none; user-select:none; border-radius:8px; box-shadow:0 6px 22px rgba(0,0,0,.35); }
   .close-btn{ position:absolute; top:10px; right:10px;
     background:rgba(255,255,255,0.9); border:none; border-radius:50%;
     width:36px; height:36px; font-weight:700; cursor:pointer;
@@ -104,10 +104,10 @@
     <div class="dot"></div>
     <div class="card">
       <div class="when">1905</div>
-      <div class="img-box" data-large="https://via.placeholder.com/1200x800.png?text=Image+1">
+      <div class="img-box">
         <img src="UNI01.png" alt="Event 1">
       </div>
-      <div class="what">Event 1 — short description Event 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short description.</div>
+      <div class="what">Event 1 — short description.</div>
     </div>
   </div>
 
@@ -115,18 +115,18 @@
     <div class="dot"></div>
     <div class="card">
       <div class="when">1914</div>
-      <div class="img-box" data-large="https://via.placeholder.com/1200x800.png?text=Image+2">
-        <img src="https://via.placeholder.com/400x250.png?text=Img2" alt="Event 2">
+      <div class="img-box">
+        <img src="https://via.placeholder.com/800x500.png?text=Image+2" alt="Event 2">
       </div>
-      <div class="what">Event 2 — short description.Event 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short description</div>
+      <div class="what">Event 2 — short description.</div>
     </div>
   </div>
   <div class="node left">
     <div class="dot"></div>
     <div class="card">
       <div class="when">1905</div>
-      <div class="img-box" data-large="https://via.placeholder.com/1200x800.png?text=Image+1">
-        <img src="https://via.placeholder.com/400x250.png?text=Img1" alt="Event 1">
+      <div class="img-box">
+        <img src="UNI01.png" alt="Event 1">
       </div>
       <div class="what">Event 1 — short description.</div>
     </div>
@@ -135,8 +135,8 @@
     <div class="dot"></div>
     <div class="card">
       <div class="when">1914</div>
-      <div class="img-box" data-large="https://via.placeholder.com/1200x800.png?text=Image+2">
-        <img src="https://via.placeholder.com/400x250.png?text=Img2" alt="Event 2">
+      <div class="img-box">
+        <img src="https://via.placeholder.com/800x500.png?text=Image+2" alt="Event 2">
       </div>
       <div class="what">Event 2 — short description.</div>
     </div>
@@ -166,7 +166,7 @@
   const imgLayer=document.getElementById('imgLayer');
   const lightImage=document.getElementById('lightImage');
   const closeBtn=document.getElementById('closeBtn');
-  const boxes=document.querySelectorAll('.img-box');
+  const boxes=document.querySelectorAll('.img-box img');
 
   let dragging=false,startX=0,startY=0,lastX=0,lastY=0,startTransform={x:0,y:0,scale:1};
 
@@ -181,8 +181,8 @@
   }
   function closeLarge(){ lightbox.classList.remove('open'); }
 
-  boxes.forEach(b=>b.addEventListener('click',()=>{
-    openLarge(b.dataset.large||b.querySelector('img').src,b.querySelector('img').alt);
+  boxes.forEach(img=>img.addEventListener('click',()=>{
+    openLarge(img.src,img.alt);
   }));
   closeBtn.addEventListener('click',closeLarge);
   lightbox.addEventListener('click',e=>{ if(e.target===lightbox) closeLarge(); });
