@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Mobile-Friendly Timeline</title>
+<style>
+  :root{
+    --bg:#fff; --fg:#111827; --muted:#6b7280;
+    --accent:#2563eb; --line:#e6e9ee;
+    --radius:12px;
+  }
+  body{
+    margin:0; padding:30px;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    background:linear-gradient(180deg,#f3f6fb,#eef4fb);
+    color:var(--fg);
+    transition:background .3s,color .3s;
+  }
+  body.dark{
+    --bg:#0b0f14; --fg:#e6eef8; --muted:#9aa8be;
+    --line:#172033; --accent:#60a5fa;
+    background:linear-gradient(180deg,#071021,#061223);
+  }
+
+  .timeline{
+    position:relative; max-width:900px; margin:0 auto;
+  }
+  .timeline::before{
+    content:""; position:absolute; top:0; bottom:0; left:50%;
+    width:2px; background:var(--line); transform:translateX(-50%);
+  }
+  .node{ position:relative; width:50%; padding:20px 40px; }
+  .node.left{ left:0; text-align:right; }
+  .node.right{ left:50%; }
+  .dot{
+    position:absolute; top:30px; left:50%; transform:translateX(-50%);
+    width:14px; height:14px; border-radius:50%;
+    background:var(--accent); border:2px solid var(--bg);
+    z-index:2;
+  }
+  .card{
+    display:inline-block;
+    background:var(--bg); border:1px solid var(--line);
+    border-radius:var(--radius); padding:14px;
+    box-shadow:0 4px 18px rgba(0,0,0,.08);
+    max-width:280px; transition:background .3s,color .3s,border .3s;
+  }
+  .when{ font-weight:700; margin-bottom:6px; }
+  .img-box{ width:100%; height:160px; overflow:hidden;
+    border-radius:8px; border:1px solid var(--line);
+    cursor:pointer; margin-bottom:8px; background:#ddd;
+  }
+  .img-box img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .what{ font-size:14px; color:var(--muted); }
+
+  /* Lightbox */
+  .lightbox{
+    position:fixed; inset:0; display:none;
+    align-items:center; justify-content:center;
+    background:rgba(8,10,14,0.55); z-index:1200;
+    backdrop-filter:blur(2px);
+  }
+  .lightbox.open{ display:flex; }
+  .panel{ position:relative; max-width:92vw; max-height:86vh;
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+  }
+  .img-layer{ will-change:transform; cursor:grab; user-select:none; touch-action:none; }
+  .img-layer.dragging{ cursor:grabbing; }
+  .panel img{ max-width:100%; max-height:100%; display:block; pointer-events:none; user-select:none; }
+  .close-btn{ position:absolute; top:10px; right:10px;
+    background:rgba(255,255,255,0.9); border:none; border-radius:50%;
+    width:36px; height:36px; font-weight:700; cursor:pointer;
+    box-shadow:0 4px 18px rgba(0,0,0,.2);
+  }
+
+  /* Theme toggle */
+  .theme-toggle{
+    position:fixed; left:10px; top:50%; transform:translateY(-50%);
+    background:var(--bg); color:var(--fg);
+    border:1px solid var(--line); border-radius:50%;
+    width:46px; height:46px; display:grid; place-items:center;
+    cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,.15);
+    z-index:2000; transition:background .3s,color .3s,border .3s;
+  }
+
+  /* Mobile adjustments */
+  @media(max-width:700px){
+    .timeline::before{ left:8px; transform:none; }
+    .node{ width:100%; padding-left:30px; padding-right:15px; text-align:left; }
+    .node.left,.node.right{ left:0; }
+    .dot{ left:0; transform:none; }
+    .card{ max-width:100%; }
+  }
+</style>
+</head>
+<body class="dark"><!-- start in dark mode -->
+
+<!-- Theme toggle -->
+<button class="theme-toggle" id="themeToggle">☀️</button>
+
+<div class="timeline">
+  <div class="node left">
+    <div class="dot"></div>
+    <div class="card">
+      <div class="when">1905</div>
+      <div class="img-box" data-large="https://via.placeholder.com/1200x800.png?text=Image+1">
+        <img src="UNI01.png" alt="Event 1">
+      </div>
+      <div class="what">Event 1 — short description Event 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short description.</div>
+    </div>
+  </div>
+
+  <div class="node right">
+    <div class="dot"></div>
+    <div class="card">
+      <div class="when">1914</div>
+      <div class="img-box" data-large="https://via.placeholder.com/1200x800.png?text=Image+2">
+        <img src="https://via.placeholder.com/400x250.png?text=Img2" alt="Event 2">
+      </div>
+      <div class="what">Event 2 — short description.Event 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short descriptionEvent 1 — short description</div>
+    </div>
+  </div>
+  <div class="node left">
+    <div class="dot"></div>
+    <div class="card">
+      <div class="when">1905</div>
+      <div class="img-box" data-large="https://via.placeholder.com/1200x800.png?text=Image+1">
+        <img src="https://via.placeholder.com/400x250.png?text=Img1" alt="Event 1">
+      </div>
+      <div class="what">Event 1 — short description.</div>
+    </div>
+  </div>
+  <div class="node right">
+    <div class="dot"></div>
+    <div class="card">
+      <div class="when">1914</div>
+      <div class="img-box" data-large="https://via.placeholder.com/1200x800.png?text=Image+2">
+        <img src="https://via.placeholder.com/400x250.png?text=Img2" alt="Event 2">
+      </div>
+      <div class="what">Event 2 — short description.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <div class="panel" id="panel">
+    <div class="img-layer" id="imgLayer" style="transform:translate(0,0) scale(1);">
+      <img id="lightImage" src="" alt="">
+    </div>
+    <button class="close-btn" id="closeBtn">✕</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  const body=document.body;
+  const toggle=document.getElementById('themeToggle');
+  toggle.addEventListener('click',()=>{
+    body.classList.toggle('dark');
+    toggle.textContent=body.classList.contains('dark')?"☀️":"🌙";
+  });
+
+  const lightbox=document.getElementById('lightbox');
+  const imgLayer=document.getElementById('imgLayer');
+  const lightImage=document.getElementById('lightImage');
+  const closeBtn=document.getElementById('closeBtn');
+  const boxes=document.querySelectorAll('.img-box');
+
+  let dragging=false,startX=0,startY=0,lastX=0,lastY=0,startTransform={x:0,y:0,scale:1};
+
+  function setTransform(x,y,scale=1){
+    lastX=x; lastY=y;
+    imgLayer.style.transform=`translate(${x}px,${y}px) scale(${scale})`;
+  }
+  function openLarge(src,alt=''){
+    lightImage.src=src; lightImage.alt=alt;
+    lightbox.classList.add('open');
+    setTransform(0,0,1);
+  }
+  function closeLarge(){ lightbox.classList.remove('open'); }
+
+  boxes.forEach(b=>b.addEventListener('click',()=>{
+    openLarge(b.dataset.large||b.querySelector('img').src,b.querySelector('img').alt);
+  }));
+  closeBtn.addEventListener('click',closeLarge);
+  lightbox.addEventListener('click',e=>{ if(e.target===lightbox) closeLarge(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLarge(); });
+
+  // Desktop & Mobile drag
+  imgLayer.addEventListener('pointerdown',e=>{
+    dragging=true; imgLayer.classList.add('dragging');
+    imgLayer.setPointerCapture(e.pointerId);
+    startX=e.clientX; startY=e.clientY;
+    startTransform.x=lastX; startTransform.y=lastY;
+  });
+  imgLayer.addEventListener('pointermove',e=>{
+    if(!dragging) return;
+    const dx=e.clientX-startX, dy=e.clientY-startY;
+    setTransform(startTransform.x+dx,startTransform.y+dy,startTransform.scale);
+  });
+  imgLayer.addEventListener('pointerup',e=>{
+    dragging=false; imgLayer.classList.remove('dragging');
+    try{ imgLayer.releasePointerCapture(e.pointerId);}catch{}
+  });
+  imgLayer.addEventListener('pointercancel',()=>{ dragging=false; imgLayer.classList.remove('dragging'); });
+
+  // Double-tap/double-click reset
+  let lastTap=0;
+  document.getElementById('panel').addEventListener('click',e=>{
+    const now=Date.now();
+    if(now-lastTap<300){ setTransform(0,0,1); }
+    lastTap=now;
+  });
+})();
+</script>
+</body>
+</html>
