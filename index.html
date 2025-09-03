@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Universal Timeline</title>
+<title>Universal Timeline 🦋</title>
 <style>
   :root{
     --bg:#fff; --fg:#c5cbd8; --muted:#6b7280;
@@ -157,7 +157,7 @@
 <button class="theme-toggle" id="themeToggle">☀️</button>
 
 <header>
-  <h1>📜 Universal Timeline</h1>
+  <h1>📜 Universal Timeline 🦋</h1>
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="Search events...">
   </div>
@@ -190,12 +190,12 @@
     
     <div style="display:flex; justify-content:space-between; align-items:center;">
       <strong>👋 Welcome!</strong>
-      <span id="welcomeClose" style="cursor:pointer; font-weight:bold;">✖</span>
+      <span id="welcomeClose" style="cursor:pointer; font-weight:bold;">❎</span>
     </div>
 
     <p style="margin-top:14px; font-size:14px; line-height:1.5;">
       <b>Thanks</b>.  
-      Explore events, just drag & enjoy history in a Universal Timeline! 🚀
+      Explore events, just drag & enjoy history in a 🌌 Universal Timeline! 🚀
     </p>
 
     <p style="font-size:13px; margin-top:10px; color:var(--muted);">
@@ -237,10 +237,34 @@
   visits++;
   localStorage.setItem("visits", visits);
   document.getElementById("visitCounter").textContent =
-    "👀 You have visited this page " + visits + " times.";
+    "👀 You have visited this page " + visits + " ⌛times.";
 </script>
 
 
+
+<!-- Local Time Box -->
+<div id="localClock" style="
+  position:fixed; top:10px; left:50%;
+  transform:translateX(-50%);
+  background:var(--bg,#111); color:var(--fg,#fff);
+  padding:8px 14px; border-radius:8px; font-size:13px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.25); z-index:9999;">
+  ⏰ Loading local time...
+</div>
+
+<script>
+function updateLocalClock() {
+  const now = new Date();
+  const date = now.toLocaleDateString(undefined, { weekday:'short', year:'numeric', month:'short', day:'numeric' });
+  const time = now.toLocaleTimeString(undefined, { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+  
+  document.getElementById("localClock").textContent = `📅 ${date} | ⏰ ${time}`;
+}
+
+// update every second
+setInterval(updateLocalClock, 1000);
+updateLocalClock();
+</script>
 <div class="timeline" id="timeline">
   <div class="node left">
     <div class="dot"></div>
