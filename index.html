@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Responsive Timeline</title>
+<title>Timeline with Search</title>
 <style>
   :root{
     --bg:#fff; --fg:#111827; --muted:#6b7280;
@@ -11,7 +11,7 @@
     --radius:12px;
   }
   body{
-    margin:0; padding:30px;
+    margin:0; padding:30px 20px;
     font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
     background:linear-gradient(180deg,#f3f6fb,#eef4fb);
     color:var(--fg);
@@ -23,9 +23,20 @@
     background:linear-gradient(180deg,#071021,#061223);
   }
 
-  .timeline{
-    position:relative; max-width:900px; margin:0 auto;
+  /* Heading & Search */
+  header{ text-align:center; margin-bottom:30px; }
+  h1{ margin:0 0 15px; font-size:26px; font-weight:700; }
+  .search-box{ max-width:400px; margin:0 auto; }
+  .search-box input{
+    width:100%; padding:10px 14px;
+    border-radius:8px; border:1px solid var(--line);
+    font-size:15px; background:var(--bg); color:var(--fg);
+    transition:border .3s;
   }
+  .search-box input:focus{ border-color:var(--accent); outline:none; }
+
+  /* Timeline */
+  .timeline{ position:relative; max-width:900px; margin:0 auto; }
   .timeline::before{
     content:""; position:absolute; top:0; bottom:0; left:50%;
     width:2px; background:var(--line); transform:translateX(-50%);
@@ -36,12 +47,10 @@
   .dot{
     position:absolute; top:30px; left:50%; transform:translateX(-50%);
     width:14px; height:14px; border-radius:50%;
-    background:var(--accent); border:2px solid var(--bg);
-    z-index:2;
+    background:var(--accent); border:2px solid var(--bg); z-index:2;
   }
   .card{
-    display:inline-block;
-    background:var(--bg); border:1px solid var(--line);
+    display:inline-block; background:var(--bg); border:1px solid var(--line);
     border-radius:var(--radius); padding:14px;
     box-shadow:0 4px 18px rgba(0,0,0,.08);
     max-width:280px; transition:background .3s,color .3s,border .3s;
@@ -64,13 +73,11 @@
     background:linear-gradient(to right, transparent, var(--bg));
     padding-left:6px; font-size:12px; color:var(--accent);
   }
-  .what.expanded{
-    max-height:200px; /* enough space */
-    overflow:auto;
-  }
-  .what.expanded::after{
-    content:" less"; background:none; font-size:12px; color:var(--accent);
-  }
+  .what.expanded{ max-height:200px; overflow:auto; }
+  .what.expanded::after{ content:" less"; background:none; color:var(--accent); }
+
+  /* Hide card when filtered */
+  .node.hidden{ display:none; }
 
   /* Lightbox */
   .lightbox{
@@ -117,7 +124,14 @@
 <!-- Theme toggle -->
 <button class="theme-toggle" id="themeToggle">☀️</button>
 
-<div class="timeline">
+<header>
+  <h1>📜 My Timeline</h1>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search events...">
+  </div>
+</header>
+
+<div class="timeline" id="timeline">
   <div class="node left">
     <div class="dot"></div>
     <div class="card">
@@ -146,7 +160,7 @@
       </div>
     </div>
   </div>
-  <div class="node left">
+   <div class="node left">
     <div class="dot"></div>
     <div class="card">
       <div class="when">1905</div>
@@ -198,6 +212,16 @@
   // Expandable descriptions
   document.querySelectorAll('.what').forEach(desc=>{
     desc.addEventListener('click',()=>desc.classList.toggle('expanded'));
+  });
+
+  // Search filter
+  const search=document.getElementById('searchInput');
+  search.addEventListener('input',()=>{
+    const term=search.value.toLowerCase();
+    document.querySelectorAll('.node').forEach(node=>{
+      const text=node.innerText.toLowerCase();
+      node.classList.toggle('hidden',!text.includes(term));
+    });
   });
 
   // Lightbox
