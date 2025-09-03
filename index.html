@@ -6,7 +6,7 @@
 <title>Universal Timeline</title>
 <style>
   :root{
-    --bg:#fff; --fg:#111827; --muted:#6b7280;
+    --bg:#fff; --fg:#c5cbd8; --muted:#6b7280;
     --accent:#ced2db; --line:#e6e9ee;
     --radius:12px;
   }
@@ -20,7 +20,7 @@
   body.dark{
     --bg:#0b0f14; --fg:#e6eef8; --muted:#9aa8be;
     --line:#172033; --accent:#60a5fa;
-    background:linear-gradient(180deg,#071021,#061223);
+    background:linear-gradient(180deg,#010d23,#042b67);
   }
 
   header{ text-align:center; margin-bottom:30px; }
@@ -105,10 +105,6 @@
     .card{ max-width:90%; margin:0 auto; text-align:left; }
   }
   /* Base style */
-.node .dot{
-  width:14px; height:14px; border-radius:50%;
-  border:2px solid var(--bg); z-index:2; position:absolute; top:30px; left:50%; transform:translateX(-50%);
-}
 :root {
   --colors: #e63946, #ffb703, #2a9d8f, #8e44ad, #1d4ed8, #f97316, #10b981;
 }
@@ -165,7 +161,16 @@
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="Search events...">
   </div>
-</header>
+</header><div id="visitCounter" style="text-align:center; margin:20px; font-weight:bold;"></div>
+
+<script>
+  let visits = localStorage.getItem("visits") || 0;
+  visits++;
+  localStorage.setItem("visits", visits);
+  document.getElementById("visitCounter").textContent =
+    "👀 You have visited this page " + visits + " times.";
+</script>
+
 
 <div class="timeline" id="timeline">
   <div class="node left">
